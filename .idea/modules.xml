@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$USER_HOME$/Downloads/upshot-montague-master/src/main/main.iml" filepath="$USER_HOME$/Downloads/upshot-montague-master/src/main/main.iml" />
+      <module fileurl="file://$USER_HOME$/Downloads/upshot-montague-master/src/main/scala/com/workday/montague/montague.iml" filepath="$USER_HOME$/Downloads/upshot-montague-master/src/main/scala/com/workday/montague/montague.iml" />
+      <module fileurl="file://$USER_HOME$/Downloads/upshot-montague-master/src/main/scala/com/workday/montague/sql_old/sql_old.iml" filepath="$USER_HOME$/Downloads/upshot-montague-master/src/main/scala/com/workday/montague/sql_old/sql_old.iml" />
+      <module fileurl="file://$USER_HOME$/Downloads/upshot-montague-master/src/test/test.iml" filepath="$USER_HOME$/Downloads/upshot-montague-master/src/test/test.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/testmontague.iml" filepath="$PROJECT_DIR$/.idea/modules/testmontague.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/testmontague-build.iml" filepath="$PROJECT_DIR$/.idea/modules/testmontague-build.iml" />
+      <module fileurl="file://$USER_HOME$/Downloads/upshot-montague-master/src/main/scala/com/workday/workday.iml" filepath="$USER_HOME$/Downloads/upshot-montague-master/src/main/scala/com/workday/workday.iml" />
+    </modules>
+  </component>
+</project>
