@@ -15,15 +15,12 @@ object ArithmeticParser extends SemanticParser[CcgCat](testMontague.lexicon) {
   }
 }
 
-case object Q1 extends TerminalCat { val category = "Q" }
+case object Q1 extends TerminalCat { val category = "Q1" }
 
 object testMontague {
   val lexicon = ParserDict[CcgCat]() +
-    (Seq("are","gave","capital","is") -> relation("BE")) +
-    (Seq("who", "what", "how", "where", "when") -> Q1) +
-    (Seq("many tasks are") -> (NP)) +
-    (Seq("many tasks") -> (NP)) +
-    (Seq("open")->((((S\Q1))/NP)/NP, λ {pred:String => λ { subject:String => λ {noun:String => Define(noun, subject, pred)}  }}))
+    (Seq("is", "are") -> relation("BE")) +
+    (Seq("who", "what", "how", "where", "when") -> Q) +
     (Else -> Seq(N % 0.8, N/N % 0.1, X % 0.1))
 
   private def relation(relationType: String) = {
@@ -33,15 +30,16 @@ object testMontague {
       // e.g. "Checkers is fluffy"
       ((S\NP)/(N/N), λ {pred: String => λ {subject: String => Define(relationType, subject, pred)}}),
       // e.g. "Who is Checkers?"
-      ((S\Q1)/NP, λ {subject: String => λ {question: String => Query(relationType, subject)}})
+      ((S\Q)/NP, λ {subject: String => λ {question: String => Query(relationType, subject)}})
         )
   }
 
     print("Check1")
 
   def main(args: Array[String]): Unit = {
-    val input =  "how many tasks are open in prime" //args.mkString(" ")
+    val input =  "checker is a fluffy" //args.mkString(" ")
     val result = ArithmeticParser.parse(input)
+    result.debugPrint()
     val output = result.bestParse.map(_.semantic.toString).getOrElse("(failed to parse)")
 
     println(s"Input: $input")
