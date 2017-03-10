@@ -30,7 +30,7 @@ object test {
     (Seq("the")->Seq((NP/NP),(NP/T),(NP\NP))) +
     (Seq("to","by")->(NP/NP)) +
     (Seq("me")->(NP)) +
-    (Seq("overdue")->((NP/T),λ{pre:String => Query("test",pre)})) +
+    (Seq("overdue")->Seq(((NP/T),λ{pre:String => Query("test",pre)}),((S\T),λ{pre:String => Query("test",pre)}))) +
     (Seq("efforts")->(NP)) +
     (Seq("spent")->((((S\NP)\NP)/NP),λ{bun:String =>λ{pre:String => Define(bun,"pred",pre)}})) +
     //(Seq("are")->((((S\Q)\NP)\NP)/NP, λ {pred: String =>λ{ pre:String=>λ{ check:String=>λ {subject: String => Define(check+pre, subject, pred)}}}}))+
@@ -46,10 +46,9 @@ object test {
     )
   }
 
-  print("Check1")
 
   def main(args: Array[String]): Unit = {
-    val input =  "tasks overdue" //args.mkString(" ")
+    val input =  "overdue tasks" //args.mkString(" ")
     val result = testArithmetic.parse(input)
     result.debugPrint();
     val output = result.bestParse.map(_.semantic.toString).getOrElse("(failed to parse)")
