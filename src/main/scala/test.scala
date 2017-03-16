@@ -1,14 +1,16 @@
 
+import java.beans.Statement
+
 import com.workday.montague.ccg._
 import com.workday.montague.parser._
 import com.workday.montague.semantics.{λ, _}
 import example.{Define, Query}
+import io.Source.stdin
 
 case object Paren extends TerminalCat { val category = "Paren" } // syntactic category for parenthetical expressions
 //case object V extends TerminalCat { val category = "V" }
 
 //TODO : Make a REPL out of this , Reading the lexicon and outputing the parsed output.
-
 
 
 
@@ -25,8 +27,9 @@ case object Q extends TerminalCat { val category = "Q" }
 
 case object T extends TerminalCat { val category = "T" }
 
-case class Events(eventType:String);
-case class listMy(e:Events,activity:String);
+sealed trait Statement;
+case class Events(eventType:String) extends Statement;
+case class listMy(e:Events,activity:String) extends Statement;
 
 object test {
   val lexicon = ParserDict[CcgCat]() +
@@ -35,11 +38,12 @@ object test {
     (Seq("that") -> ((NP\NP),identity)) +
     (Seq("iam","i am") ->((S/V)\NP,λ { n3:Events  => λ { n2:String => listMy(n3,n2)}})) +
     (Seq("participating","participant","a participant") ->(V,Form("participant"):SemanticState)) +
-    (Seq("organizing") ->(V,Form("organizer"):SemanticState)) +
+    (Seq("organizing","a organizer") ->(V,Form("organizer"):SemanticState)) +
     (Seq("what") ->(Q,identity)) +
     (Seq("are") ->(NP\Q,identity)) +
     (Seq("all") ->(NP\NP,identity)) +
-    (Seq("the") ->((NP/NP)\NP,identity))
+    (Seq("the") ->((NP/NP)\NP,identity)) +
+    (Seq("my") ->(NP/NP,λ { n3:Events  => listMy(n3,"All")}))
 
   //(Seq("are","gave","capital","is") -> relation("BE")) +
   /*(Seq("assigned")->((((S\NP)\T)/NP),λ{ pre:String=>λ{ check:String=>λ {subject: String => Define(check, subject, pre)}}}))   +
@@ -68,8 +72,16 @@ object test {
     )
   }
 
-
   def main(args: Array[String]): Unit = {
+    print(">> ")
+    for(line <- stdin.getLines()){
+      val output = testArithmetic.parse(line).bestParse;
+      println(output);
+      print(">> ");
+    }
+  }
+
+  /*def main(args: Array[String]): Unit = {
     val input =  "events that i am a participant" //args.mkString(" ")
     val result = testArithmetic.parse(input)
     //result.debugPrint();
@@ -77,5 +89,5 @@ object test {
 
     println(s"Input: $input")
     println(s"Output: $output")
-  }
+  }*/
 }
